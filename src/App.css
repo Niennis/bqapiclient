@@ -1,3 +1,12 @@
+body{
+  /* background-color:  #5ba9bbfe;
+  background-color:  #8a56abfe; */
+  background-color: #212424;
+  margin: 0;
+  font-family:Verdana, Geneva, Tahoma, sans-serif;
+  color: rgb(235, 238, 238);
+}
+
 .App {
   text-align: center;
 }
@@ -14,8 +23,9 @@
 }
 
 .App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+  background-image: linear-gradient(to left, #3bb5b6fe , #3bb5b6fe,  #8856abfe);
+
+  min-height: 20vh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -35,4 +45,45 @@
   to {
     transform: rotate(360deg);
   }
+}
+/* img{
+  max-height: 200px;
+  max-width: 200px;
+} */
+
+.allProducts{
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.allOrders{
+  height: 70vh;
+  display: flex;
+  flex-flow: column wrap;
+  align-items: flex-start;
+  justify-content: flex-start;
+  align-content: center;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+a{
+  text-decoration: none;
+  color: white;
+}
+
+a:active{
+  color: white;
+}
+
+.orderItem{
+  display: flex;
+}
+
+.orderItem p{
+  padding: 0 10px;
 }
