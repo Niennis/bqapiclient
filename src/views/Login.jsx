@@ -1,31 +1,28 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
+import { signIn } from '../controller/api';
+import Box from '@mui/material/Box';
+import TextField from '@mui/material/TextField';
+import Stack from '@mui/material/Stack';
+import Button from '@mui/material/Button';
 
 export const Login = ({ getToken, navigateToHome }) => {
 
-  const [dbData, setDBData] = useState([]);
   const [email, setEmail] = useState('');
   const [password, setPass] = useState('');
-  // const [token, setToken] = useState('');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    let url = 'https://bq-niennis.herokuapp.com/';
     let user = {
-      "email": "admin@localhost",
-      "password": "changeme"
+      "email": email,
+      "password": password
     };
-    
-    fetch(`https://bq-niennis.herokuapp.com/auth`, {
-      method: 'POST',
-      body: JSON.stringify(user),
-      headers: {
-        "content-type": "application/json"
-      },
-    })
-      .then(resp => resp.json())
+
+    signIn(url, 'auth', user)
       .then(resp => {
         localStorage.setItem('user', JSON.stringify(resp))
         console.log(resp)
-        getToken(resp.token)
+        getToken(resp)
         navigateToHome()
       })
       .catch(err => console.log(err))
@@ -33,55 +30,37 @@ export const Login = ({ getToken, navigateToHome }) => {
 
   return (
     <section>
-      <form onSubmit={handleSubmit}>
-        <label htmlFor="email">Email:</label>
-        <input
-          type='text'
-          id='email'
-          autoComplete='off'
+      <Box
+        component="form"
+        sx={{
+          '& .MuiTextField-root': { m: 1, width: '25ch', backgroundColor: 'white' },
+        }}
+        noValidate
+        autoComplete="off"
+      >
+        <TextField
+          required
+          id="filled-required"
+          label="Email"
+          type="email"
+          variant="filled"
           onChange={(e) => setEmail(e.target.value)}
-          value={email}
-          required
+          name="email"
         />
-
-        <label htmlFor="password">Pass:</label>
-        <input
-          type='text'
-          id='password'
-          autoComplete='off'
+        <TextField
+          required
+          id="filled-password-input"
+          label="Password"
+          type="password"
+          autoComplete="current-password"
+          variant="filled"
           onChange={(e) => setPass(e.target.value)}
-          value={password}
-          required
+          name="password"
         />
-
-        <button>Sign in</button>
-      </form>
+        <Stack spacing={2} direction="row" alignItems={"center"} justifyContent={"center"}>
+          <Button variant="outlined" onClick={handleSubmit}>Conectar</Button>
+        </Stack>
+      </Box>
     </section>
   )
 }
-
-
-
-
-  /*   const callData = (leToken) => {
-      return fetch('http://localhost:8080/products', {
-        method: 'GET',
-        headers: {
-          "content-type": "application/json",
-          authorization: 'Bearer ' + leToken,
-        }
-      })
-        .then(response => response.json())
-        .then(resp => console.log('Productos', resp))
-    } */
-
-
-
-  /* 
-  {
-    "email": "waiter@gmail.com",
-    "password": "123456"
-    admin@gmail.com
-    123456
-  }
-  */

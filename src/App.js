@@ -4,6 +4,7 @@ import Navbar from './views/Navbar.jsx';
 
 import { Home } from "./views/Home";
 import Kitchen from "./views/Kitchen";
+import Admin from "./views/Admin";
 import { Login } from "./views/Login";
 import ProtectedRoute from './components/ProtectedRoute.jsx';
 
@@ -18,9 +19,9 @@ const App = () => {
   //   // setUser(currentUser)
   // }, [])
 
-  const getToken = (currentToken) => {
-    console.log('currentToken', currentToken); 
-    setUser(currentToken)
+  const getToken = (user) => {
+    console.log('currentToken', user); 
+    setUser(user.token)
   }
 
   const navigateToHome = () => {
@@ -30,7 +31,7 @@ const App = () => {
   return (
     <div className="App">
       {/* <BrowserRouter> */}
-        <Navbar />
+        <Navbar user={user}/>
 
         <Routes>
           <Route path="/" element={<Login getToken={getToken} navigateToHome={navigateToHome}/>} />      
@@ -43,6 +44,13 @@ const App = () => {
             element={
               <ProtectedRoute user = { user }>
                 <Home authToken={ user } />
+              </ProtectedRoute>
+            } />
+            <Route
+            path="admin"
+            element={
+              <ProtectedRoute user = { user }>
+                <Admin authToken={ user } />
               </ProtectedRoute>
             } />
         </Routes>

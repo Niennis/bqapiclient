@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Orders } from '../components/Orders.jsx';
 
-export default function Kitchen({ authToken }) {
+const Kitchen = ({ authToken }) => {
   const [orders, setOrders] = useState([]);
 
   const callOrders = () => {
@@ -16,15 +16,11 @@ export default function Kitchen({ authToken }) {
   }
 
   useEffect(() => {
-    // let mounted = true;
     callOrders()
       .then(items => {
-        // if (mounted) {
           const pendingOrders = items.orders.filter(item => item.status === 'pending')
           setOrders(pendingOrders)
-        // }
       })
-    // return () => mounted = false;
   }, [])
 
   const date = new Date()
@@ -69,3 +65,5 @@ export default function Kitchen({ authToken }) {
     </div>
   )
 }
+
+export default Kitchen;
