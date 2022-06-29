@@ -1,5 +1,7 @@
-export const signIn = (url, route, user) => {
-  return fetch(`${url}${route}`, {
+const API_URL = process.env.REACT_APP_API_URL;
+
+export const signIn = (route, user) => {
+  return fetch(`${API_URL}${route}`, {
     method: 'POST',
     body: JSON.stringify(user),
     headers: {
@@ -9,8 +11,8 @@ export const signIn = (url, route, user) => {
     .then(resp => resp.json())
 }
 
-export const getItems = (url, route, authToken) => {
-  return fetch(`${url}${route}`, {
+export const getItems = (route, authToken) => {
+  return fetch(`${API_URL}${route}`, {
     method: 'GET',
     headers: {
       "content-type": "application/json",
@@ -20,8 +22,8 @@ export const getItems = (url, route, authToken) => {
     .then(response => response.json())
 }
 
-export const sendOrder = (url, route, body, authToken) => {
-  return fetch(`${url}${route}`, {
+export const sendOrder = (route, body, authToken) => {
+  return fetch(`${API_URL}${route}`, {
     method: 'POST',
     body: JSON.stringify(body),
     headers: {
@@ -32,8 +34,8 @@ export const sendOrder = (url, route, body, authToken) => {
     .then(response => response.json())
 }
 
-export const updateItem = async (url, route, itemId, body, authToken) => {
-  const response = await fetch(`${url}${route}${itemId}`, {
+export const updateItem = async (route, itemId, body, authToken) => {
+  const response = await fetch(`${API_URL}${route}${itemId}`, {
     method: 'PATCH',
     body: JSON.stringify(body),
     headers: {
