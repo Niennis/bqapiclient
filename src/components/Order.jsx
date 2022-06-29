@@ -1,7 +1,7 @@
 import React from 'react'
 import CustomizedButtons from './SendButton'
 
-export const Order = ({ orderProducts, addItem, deleteItem, deleteAllItem, totalItem, totalOrder, sendOrder }) => {
+export const Order = ({ orderProducts, addItem, deleteItem, deleteAllItem, totalOrder, sendOrder }) => {
 
   return (
     <div>
@@ -13,7 +13,7 @@ export const Order = ({ orderProducts, addItem, deleteItem, deleteAllItem, total
             <p>{element.qty}</p>
             <p onClick={() => { deleteItem(element.product) }}>-</p>
             <p>{element.product.name}</p>
-            <p>{totalItem}</p>
+            <p>{element.qty * element.product.price}</p>
             <p onClick={() => { deleteAllItem(element.product) }}>x </p>
           </div>
         )

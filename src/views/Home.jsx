@@ -134,7 +134,6 @@ export const Home = ({ authToken }) => {
             addItem={handleAddProduct}
             deleteItem={deleteItem}
             deleteAllItem={deleteAllItem}
-            totalItem={12}
             totalOrder={'$' + handleTotal()}
             sendOrder={() => sendOrder()} />
         </>

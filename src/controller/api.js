@@ -1,4 +1,4 @@
-const API_URL = process.env.REACT_APP_API_URL;
+const API_URL = 'https://bq-niennis.herokuapp.com';
 
 export const signIn = (route, user) => {
   return fetch(`${API_URL}${route}`, {
