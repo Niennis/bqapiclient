@@ -1,20 +1,24 @@
 import React from 'react'
-import CustomizedButtons from './SendButton'
+import CustomizedButtons from './SendButton';
+
+import AddCircleTwoToneIcon from '@mui/icons-material/AddCircleTwoTone';
+import RemoveCircleTwoToneIcon from '@mui/icons-material/RemoveCircleTwoTone';
+import DeleteForeverTwoToneIcon from '@mui/icons-material/DeleteForeverTwoTone';
 
 export const Order = ({ orderProducts, addItem, deleteItem, deleteAllItem, totalOrder, sendOrder }) => {
 
   return (
-    <div>
-      <h3>Orden n°...</h3>
+    <div className="orderContainer">
       {orderProducts.map((element, index) => {
         return (
           <div className="orderItem" key={element.product.name + index}>
-            <p onClick={() => { addItem(element.product) }}>+</p>
+            <p onClick={() => { addItem(element.product) }}><AddCircleTwoToneIcon /></p>
+
             <p>{element.qty}</p>
-            <p onClick={() => { deleteItem(element.product) }}>-</p>
+            <p onClick={() => { deleteItem(element.product) }}><RemoveCircleTwoToneIcon /></p>
             <p>{element.product.name}</p>
             <p>{element.qty * element.product.price}</p>
-            <p onClick={() => { deleteAllItem(element.product) }}>x </p>
+            <p onClick={() => { deleteAllItem(element.product) }}><DeleteForeverTwoToneIcon /></p>
           </div>
         )
       })}
