@@ -2,6 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { Product } from '../components/Product';
 import { Order } from '../components/Order';
 
+import Box from '@mui/material/Box';
+import TextField from '@mui/material/TextField';
+
 export const Home = ({ authToken }) => {
   const [dbData, setDBData] = useState([]);
   const [orderProducts, setOrderProducts] = useState([])
@@ -9,7 +12,7 @@ export const Home = ({ authToken }) => {
   const [client, setClient] = useState('');
 
   const getProducts = (authToken) => {
-    return fetch('https://bq-niennis.herokuapp.com/products', {
+    return fetch('http://localhost:80/products', {
       method: 'GET',
       headers: {
         "content-type": "application/json",
@@ -100,7 +103,7 @@ export const Home = ({ authToken }) => {
     newOrder.products = listOfProducts;
     console.log(newOrder)
 
-      return fetch('https://bq-niennis.herokuapp.com/orders', {
+      return fetch('http://localhost:80/orders', {
         method: 'POST',
         body: JSON.stringify(newOrder),
         headers: {
@@ -113,9 +116,25 @@ export const Home = ({ authToken }) => {
   }
 
   return (
-    <section>
-      <label htmlFor="client">Nombre cliente: </label>
-      <input type="text" name="client" id="client" onChange={(e) => setClient(e.target.value)} />
+    <section className='home'>
+      <Box
+        component="form"
+        sx={{
+          '& .MuiTextField-root': { m: 1, width: '25ch', backgroundColor: 'white' },
+        }}
+        noValidate
+        autoComplete="off"
+      >
+        <TextField
+          required
+          id="filled-required"
+          label="Nombre cliente"
+          type="text"
+          variant="filled"
+          onChange={(e) => setClient(e.target.value)}
+          name="client"
+        />
+        </Box>
       <div className="allProducts" >
         {dbData.map(element => {
           return (
@@ -127,7 +146,7 @@ export const Home = ({ authToken }) => {
       </div>
 
       {orderProducts.length === 0
-        ? <h3>Add items...</h3>
+        ? <h3 className='orderContainer'>Agregar productos</h3>
         : <>
           <Order
             orderProducts={listOfProducts}

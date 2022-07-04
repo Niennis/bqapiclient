@@ -18,7 +18,7 @@ export const Login = ({ getToken, navigateToHome }) => {
       "password": password
     };
 
-    signIn('/auth', user)
+    signIn('auth', user)
       .then(resp => {
         localStorage.setItem('user', JSON.stringify(resp))
         console.log(resp)

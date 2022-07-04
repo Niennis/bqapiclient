@@ -1,41 +1,43 @@
 import React, { useState, useEffect } from 'react';
 import { Orders } from '../components/Orders.jsx';
+import { getItemById, getItems } from '../controller/api.js';
 
 const Kitchen = ({ authToken }) => {
   const [orders, setOrders] = useState([]);
-
-  const callOrders = () => {
-    return fetch('https://bq-niennis.herokuapp.com/orders', {
-      method: 'GET',
-      headers: {
-        "content-type": "application/json",
-        authorization: 'Bearer ' + authToken,
-      }
-    })
-      .then(response => response.json())
-  }
+  const [order, setOrder] = useState('');
 
   useEffect(() => {
-    callOrders()
+    getItems('orders', authToken)
       .then(items => {
-          const pendingOrders = items.orders.filter(item => item.status === 'pending')
-          setOrders(pendingOrders)
+        const pendingOrders = items.orders.filter(item => item.status === 'pending')
+        setOrders(pendingOrders)
       })
   }, [])
 
-  const date = new Date()
-  const days = date.getDate() < 10 ? '0' + date.getDate() : date.getDate();
-  const month = date.getMonth() < 10 ? '0' + date.getMonth() : date.getMonth();
-  const dateProcessed = date.getFullYear() + '-' + month + '-' + days + ' ' + date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds()
-
-  const updatedOrder = {
-    "status": "delivered",
-    "dateProcessed": dateProcessed
+  const getOrder = (order) => {
+    getItemById('orders', order.id, authToken)
+      .then(resp => setOrder(resp))
   }
 
   const handleUpdate = async (order) => {
-    const response = await fetch('https://bq-niennis.herokuapp.com/orders/' + order.id, {
-      method: 'PATCH',
+
+    const date = new Date()
+    const days = date.getDate() < 10 ? '0' + date.getDate() : date.getDate();
+    const month = date.getMonth() < 10 ? '0' + date.getMonth() : date.getMonth();
+    const dateProcessed = date.getFullYear() + '-' + month + '-' + days + ' ' + date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds()
+
+    const updatedOrder = {
+      id: order.id,
+      userId: order.userId,
+      client: order.client,
+      products: order.products,
+      status: "delivered",
+      dateEntry: order.dateEntry,
+      dateProcessed: dateProcessed
+    }
+
+    const response = await fetch('http://localhost:80/orders/' + order.id, {
+      method: 'PUT',
       body: JSON.stringify(updatedOrder),
       headers: {
         "content-type": "application/json",
@@ -44,7 +46,7 @@ const Kitchen = ({ authToken }) => {
     });
     const resp = await response.json();
     const pendingOrders = orders.map(item => {
-      if(item.id === order.id){
+      if (item.id === order.id) {
         item = resp
       }
       return item
@@ -58,7 +60,12 @@ const Kitchen = ({ authToken }) => {
       {
         orders.map((item) => {
           return (
-            <Orders key={item.id + item.userId} client={item.client} product={item} qtyProducts={orders.length} handleUpdate={() => handleUpdate(item)} />
+              <Orders
+                key={item.id + item.userId}
+                order={item}
+                qtyProducts={orders.length}
+                getOrder={() => getOrder(item)}
+                handleUpdate={() => handleUpdate(item)} />
           )
         })
       }
