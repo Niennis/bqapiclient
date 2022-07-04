@@ -20,19 +20,11 @@ import { visuallyHidden } from '@mui/utils';
 import AlertDialog from './Alert';
 import Form from './Form'
 
+import { ThemeProvider } from '@mui/material/styles';
 import Button from '@mui/material/Button';
 import { styled } from '@mui/material/styles';
 import { purple } from '@mui/material/colors';
-const ColorButton = styled(Button)(({ theme }) => ({
-  color: theme.palette.getContrastText(purple[100]),
-  backgroundColor: purple[100],
-  '&:hover': {
-    backgroundColor: 'teal',
-    color: 'white'
-  },
-  spacing: 50,
-}));
-
+import { theme, ColorButton } from '../utils/theme';
 
 const descendingComparator = (a, b, orderBy) => {
   if (b[orderBy] < a[orderBy]) {
@@ -84,7 +76,7 @@ const EnhancedTableHead = (props) => {
           />
         </TableCell>
         {headCells.map((headCell) => (
-          <TableCell
+          <TableCell  sx={{ color:'white'}}
             key={headCell.id}
             align={headCell.numeric ? 'center' : 'left'}
             padding={headCell.disablePadding ? 'none' : 'normal'}
@@ -144,17 +136,17 @@ const EnhancedTable = ({ rows, typeForm, headCells, functions }) => {
     setModal(!modal)
   }
 
-
-  // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows =
     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
 
   return (
-    <Box sx={{ width: '100%' }}>
+    <ThemeProvider theme={theme}>
+
+    <Box sx={{ width: '100%', backgroundColor:'#40414c89' }}>
       <Paper sx={{ width: '100%', mb: 2 }}>
         <Toolbar>
           <Typography
-            sx={{ flex: '1 1 100%' }}
+            sx={{ flex: '1 1 100%', color:'white' }}
             variant="h6"
             id="tableTitle"
             component="div"
@@ -164,7 +156,7 @@ const EnhancedTable = ({ rows, typeForm, headCells, functions }) => {
           </Typography>
           <Tooltip title="Agregar usuario">
             <IconButton onClick={() => { handleModal(); setIsNew(true); }}>
-              <AddCircleIcon />
+              <AddCircleIcon  sx={{ color:'white'}}/>
             </IconButton>
           </Tooltip>
         </Toolbar>
@@ -203,7 +195,7 @@ const EnhancedTable = ({ rows, typeForm, headCells, functions }) => {
                           }}
                         />
                       </TableCell>
-                      <TableCell
+                      <TableCell  sx={{ color:'white'}}
                         component="th"
                         id={labelId}
                         scope="row"
@@ -211,7 +203,7 @@ const EnhancedTable = ({ rows, typeForm, headCells, functions }) => {
                       >
                         {row[Object.values(headCells[0])[0]]}
                       </TableCell>
-                      <TableCell align="center">
+                      <TableCell align="center"  sx={{ color:'white'}}>
                         {Object.values(headCells[1])[0] === 'rol' ? (row.roles.admin && 'Admin') : row.price}
                       </TableCell>
                       <TableCell align="center">
@@ -222,7 +214,6 @@ const EnhancedTable = ({ rows, typeForm, headCells, functions }) => {
                           handleUpdate={() => functions.handleEdit(typeForm === 'Usuarios' ? 'users' : 'products', row.id)} 
                         /> */}
                         <ColorButton
-                          variant="contained"
                           sx={{ m: 1, textTransform: 'capitalize', margin: 0 }}
                           onClick={() => { 
                             handleModal(); 
@@ -255,7 +246,7 @@ const EnhancedTable = ({ rows, typeForm, headCells, functions }) => {
             </TableBody>
           </Table>
         </TableContainer>
-        <TablePagination
+        <TablePagination  sx={{ color:'white'}}
           rowsPerPageOptions={[5, 10, 25]}
           component="div"
           count={rows.length}
@@ -277,6 +268,7 @@ const EnhancedTable = ({ rows, typeForm, headCells, functions }) => {
 
       }
     </Box>
+    </ThemeProvider>
   );
 }
 

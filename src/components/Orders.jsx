@@ -1,7 +1,6 @@
 import React from 'react';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import { CardActionArea } from '@mui/material';
 import AlertDialog from './Alert';
@@ -9,9 +8,16 @@ import AlertDialog from './Alert';
 export const Orders = ({ order, qtyProducts, getOrder, handleUpdate }) => {
 
   return (
-    <Card sx={{ maxWidth: 220, bgcolor: '#6a1b9a', width: 220, height: { qtyProducts } * 100, color: '#e1bee7' }}>
-      <CardActionArea>
+    <Card sx={{ 
+      maxWidth: 220, 
+      bgcolor: '#40414c89', 
+      width: 220, 
+      height: { qtyProducts } * 100, 
+      color: 'white',
+      padding: '5px',
+      border: '1px solid #A1AAA1'}}>
 
+      <CardActionArea>
         <CardContent sx={{ padding: 0, margin: 0 }}>
           <Typography gutterBottom component="div" sx={{ padding: 0, margin: 0, fontSize: 16 }}>
             {order.client}

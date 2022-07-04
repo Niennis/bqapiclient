@@ -128,7 +128,7 @@ const Form = ({ typeForm, showModal, handleNewItem }) => {
                 native: true,
               }}
               variant="outlined"
-              sx={{ width: '200px' }}
+              sx={{ width: '200px', backgroundColor:'white' }}
             >
               {roles.map((option) => (
                 <option key={option.value} value={option.value}>

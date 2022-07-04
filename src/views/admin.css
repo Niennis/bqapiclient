@@ -1,0 +1,34 @@
+
+main{
+  width: 95vw;
+  margin: auto;
+  margin-top: 20px;
+  color: white;
+}
+
+.formContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: absolute;
+  top: 50px;
+  background-color: #212424e1;
+  width: 95vw;
+  height: 80vh;
+  margin: 0;
+  z-index: 1;
+}
+
+.alerts div{
+  display: inline;
+  margin: 5px;
+}
+
+.alerts{
+  justify-content: space-between;
+  padding: 10px 0;
+}
+
+table{
+  color:white
+}

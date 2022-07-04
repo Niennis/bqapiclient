@@ -9,8 +9,8 @@ import { CardActionArea } from '@mui/material';
 export const Product = ({ img, name, price, addItem }) => {
   return (
     <>
-      <Card sx={{ maxWidth: 160, bgcolor: '#3bb5b6fe', width:160, height: 185 }}>
-        <CardActionArea onClick={addItem}>
+      <CardActionArea onClick={addItem}>
+        <Card sx={{ maxWidth: 160, bgcolor: '#6C9400', width: 160, height: 215, color: 'white' }}>
           <CardMedia
             component="img"
             height="140"
@@ -19,16 +19,16 @@ export const Product = ({ img, name, price, addItem }) => {
             image={img}
             alt={name}
           />
-          <CardContent sx={{padding: 0, margin: 0}}>
-            <Typography gutterBottom  component="div" sx={{padding: 0, margin: 0, fontSize: 16}}>
-              {name} 
+          <CardContent sx={{ padding: 0, margin: 0 }}>
+            <Typography component="div" sx={{ padding: 0, marginTop: 0, fontSize: 16 }}>
+              {name}
             </Typography>
-            <Typography variant="body2" color="text.secondary">
+            <Typography variant="body2" color="white">
               ${price}
             </Typography>
           </CardContent>
-        </CardActionArea>
-      </Card>
+        </Card>
+      </CardActionArea>
     </>
   )
 }

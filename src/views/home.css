@@ -1,0 +1,66 @@
+
+
+
+.home{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #40414c89;
+  height: 100vh;
+}
+
+.allProducts{
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.allProducts img{
+  height: 140px;
+  width: 160px;
+  object-fit: contain;
+  background-color: white;
+}
+
+.allOrders{
+  height: 70vh;
+  display: flex;
+  flex-flow: column wrap;
+  align-items: flex-start;
+  justify-content: flex-start;
+  align-content: center;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.orderContainer{
+  width: 30vw;
+  padding: 10px;
+  margin-top: 5vh;
+  border: 1px solid rgba(255, 255, 255, 0.311);
+  background-color: rgba(255, 255, 255, 0.119);
+}
+
+.orderItem{
+  display: flex;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.311);
+  width: 30vw;
+  height: min-content;
+}
+
+.orderItem p{
+  padding: 0 5px;
+  margin: 2px 0;
+  width: 25px;
+}
+
+.orderItem .orderNameProduct{
+  width: 200px;
+}
+
+.orderItem .orderPriceProduct{
+  width: 100px;
+}

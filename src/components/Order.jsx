@@ -13,11 +13,10 @@ export const Order = ({ orderProducts, addItem, deleteItem, deleteAllItem, total
         return (
           <div className="orderItem" key={element.product.name + index}>
             <p onClick={() => { addItem(element.product) }}><AddCircleTwoToneIcon /></p>
-
             <p>{element.qty}</p>
             <p onClick={() => { deleteItem(element.product) }}><RemoveCircleTwoToneIcon /></p>
-            <p>{element.product.name}</p>
-            <p>{element.qty * element.product.price}</p>
+            <p className='orderNameProduct'>{element.product.name}</p>
+            <p className='orderPriceProduct'>$ {element.qty * element.product.price}</p>
             <p onClick={() => { deleteAllItem(element.product) }}><DeleteForeverTwoToneIcon /></p>
           </div>
         )

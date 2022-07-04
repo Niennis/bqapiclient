@@ -6,6 +6,10 @@ import { getItems, sendOrder } from '../controller/api';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 
+import { ThemeProvider } from '@mui/material/styles';
+import { theme } from '../utils/theme'
+import './home.css';
+
 export const Home = ({ authToken }) => {
   const [dbData, setDBData] = useState([]);
   const [orderProducts, setOrderProducts] = useState([])
@@ -93,52 +97,54 @@ export const Home = ({ authToken }) => {
     newOrder.products = listOfProducts;
     console.log(newOrder)
 
-      return sendOrder('orders', newOrder, authToken)
-        .then(resp => console.log(resp))
+    return sendOrder('orders', newOrder, authToken)
+      .then(resp => console.log(resp))
   }
 
   return (
     <section className='home'>
-      <Box
-        component="form"
-        sx={{
-          '& .MuiTextField-root': { m: 1, width: '25ch', backgroundColor: 'white' },
-        }}
-        noValidate
-        autoComplete="off"
-      >
-        <TextField
-          required
-          id="filled-required"
-          label="Nombre cliente"
-          type="text"
-          variant="filled"
-          onChange={(e) => setClient(e.target.value)}
-          name="client"
-        />
+      <ThemeProvider theme={theme}>
+        <Box
+          component="form"
+          sx={{
+            '& .MuiTextField-root': { m: 1, width: '25ch', backgroundColor: 'white' },
+          }}
+          noValidate
+          autoComplete="off"
+        >
+          <TextField
+            required
+            id="filled-required"
+            label="Nombre cliente"
+            type="text"
+            variant="filled"
+            onChange={(e) => setClient(e.target.value)}
+            name="client"
+          />
         </Box>
-      <div className="allProducts" >
-        {dbData.map(element => {
-          return (
-            <div key={element.id}>
-              <Product img={element.image} name={element.name} price={element.price} addItem={() => { addItem(element) }} />
-            </div>
-          )
-        })}
-      </div>
+        <div className="allProducts" >
+          {dbData.map(element => {
+            return (
+              <div key={element.id}>
+                <Product img={element.image} name={element.name} price={element.price} addItem={() => { addItem(element) }} />
+              </div>
+            )
+          })}
+        </div>
 
-      {orderProducts.length === 0
-        ? <h3 className='orderContainer'>Agregar productos</h3>
-        : <>
-          <Order
-            orderProducts={listOfProducts}
-            addItem={handleAddProduct}
-            deleteItem={deleteItem}
-            deleteAllItem={deleteAllItem}
-            totalOrder={'$' + handleTotal()}
-            sendOrder={() => createOrder()} />
-        </>
-      }
+        {orderProducts.length === 0
+          ? <h3 className='orderContainer'>Agregar productos</h3>
+          : <>
+            <Order
+              orderProducts={listOfProducts}
+              addItem={handleAddProduct}
+              deleteItem={deleteItem}
+              deleteAllItem={deleteAllItem}
+              totalOrder={'$' + handleTotal()}
+              sendOrder={() => createOrder()} />
+          </>
+        }
+      </ThemeProvider>
     </section>
   )
 }

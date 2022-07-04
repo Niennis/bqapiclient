@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Orders } from '../components/Orders.jsx';
 import { getItemById, getItems, updateItem } from '../controller/api.js';
 
+import './kitchen.css';
+
 const Kitchen = ({ authToken }) => {
   const [orders, setOrders] = useState([]);
   const [order, setOrder] = useState('');
@@ -61,12 +63,12 @@ const Kitchen = ({ authToken }) => {
       {
         orders.map((item) => {
           return (
-              <Orders
-                key={item.id + item.userId}
-                order={item}
-                qtyProducts={orders.length}
-                getOrder={() => getOrder(item)}
-                handleUpdate={() => handleUpdate(item)} />
+            <Orders
+              key={item.id + item.userId}
+              order={item}
+              qtyProducts={orders.length}
+              getOrder={() => getOrder(item)}
+              handleUpdate={() => handleUpdate(item)} />
           )
         })
       }

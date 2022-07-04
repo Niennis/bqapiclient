@@ -5,6 +5,10 @@ import TextField from '@mui/material/TextField';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 
+import { ThemeProvider } from '@mui/material/styles';
+import { theme } from '../utils/theme'
+import './login.css'
+
 export const Login = ({ getToken, navigateToHome }) => {
 
   const [email, setEmail] = useState('');
@@ -29,7 +33,7 @@ export const Login = ({ getToken, navigateToHome }) => {
   }
 
   return (
-    <section>
+    <section className='loginSection'>
       <Box
         component="form"
         sx={{
@@ -38,29 +42,34 @@ export const Login = ({ getToken, navigateToHome }) => {
         noValidate
         autoComplete="off"
       >
-        <TextField
-          required
-          id="filled-required"
-          label="Email"
-          type="email"
-          variant="filled"
-          onChange={(e) => setEmail(e.target.value)}
-          name="email"
-        />
-        <TextField
-          required
-          id="filled-password-input"
-          label="Password"
-          type="password"
-          autoComplete="current-password"
-          variant="filled"
-          onChange={(e) => setPass(e.target.value)}
-          name="password"
-        />
-        <Stack spacing={2} direction="row" alignItems={"center"} justifyContent={"center"}>
-          <Button variant="outlined" onClick={handleSubmit}>Conectar</Button>
-        </Stack>
+        <ThemeProvider theme={theme}>
+
+          <TextField
+            color="primary"
+            required
+            id="filled-required"
+            label="Email"
+            type="email"
+            variant="filled"
+            onChange={(e) => setEmail(e.target.value)}
+            name="email"
+          />
+          <TextField
+            color="primary"
+            required
+            id="filled-password-input"
+            label="Password"
+            type="password"
+            autoComplete="current-password"
+            variant="filled"
+            onChange={(e) => setPass(e.target.value)}
+            name="password"
+          />
+          <Stack spacing={2} direction="row" alignItems={"center"} justifyContent={"center"}>
+            <Button color="primary" variant="contained" sx={{ margin: '8px' }} onClick={handleSubmit}>Conectar</Button>
+          </Stack>
+        </ThemeProvider>
       </Box>
-    </section>
+    </section >
   )
 }

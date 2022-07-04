@@ -5,9 +5,10 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import { styled } from '@mui/material/styles';
-import { purple } from '@mui/material/colors';
+import { ThemeProvider } from '@mui/material/styles';
+import { theme } from '../utils/theme'
 
-const AlertDialog = ({action, handleGet, handleUpdate}) => {
+const AlertDialog = ({ action, handleGet, handleUpdate }) => {
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
@@ -19,51 +20,54 @@ const AlertDialog = ({action, handleGet, handleUpdate}) => {
   };
 
   const ColorButton = styled(Button)(({ theme }) => ({
-    color: theme.palette.getContrastText(purple[100]),
-    backgroundColor: purple[100],
+    color: theme.palette.getContrastText('#6C9400'),
+    backgroundColor: "#6C9400",
     '&:hover': {
-      backgroundColor: 'teal',
+      backgroundColor: "#40414c89",
       color: 'white'
     },
     spacing: 50,
   }));
-  
+
   return (
     <div>
-      <ColorButton
-        variant="contained" 
-        sx={{m:1, textTransform:'capitalize', margin: 0}} 
-        onClick={() => {handleClickOpen(); handleGet()}}>
+      <ThemeProvider theme={theme}>
+
+        <ColorButton
+          variant="contained"
+          sx={{ m: 1, textTransform: 'capitalize', margin: 0 }}
+          onClick={() => { handleClickOpen(); handleGet() }}>
           {action}
-      </ColorButton>
-      <Dialog
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-      >
-       
-        <DialogContent>
-          <DialogContentText id="alert-dialog-description">
-            Desea confirmar petición
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button
-            variant="outlined"
-            sx={{borderColor:'purple', color:'purple'}}
-            onClick={handleClose}>
+        </ColorButton>
+        <Dialog
+          open={open}
+          onClose={handleClose}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+
+          <DialogContent>
+            <DialogContentText id="alert-dialog-description">
+              Desea confirmar petición
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button
+              variant="outlined"
+              sx={{ borderColor: '#40414c89', color: '#40414c89' }}
+              onClick={handleClose}>
               Cancelar
-          </Button>
-          <Button
-            variant="contained"
-            sx={{backgroundColor:'teal', color:'white'}}
-            onClick={() => {handleClose(); handleUpdate()}}
-            autoFocus>
+            </Button>
+            <Button
+              variant="contained"
+              sx={{ backgroundColor: '#6C9400', color: 'white' }}
+              onClick={() => { handleClose(); handleUpdate() }}
+              autoFocus>
               Aceptar
-          </Button>
-        </DialogActions>
-      </Dialog>
+            </Button>
+          </DialogActions>
+        </Dialog>
+      </ThemeProvider>
     </div>
   );
 }

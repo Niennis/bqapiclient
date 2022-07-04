@@ -6,6 +6,10 @@ import { getItems, getItemById, updateItem, deleteItem, newItem } from '../contr
 import { headCellsUsers, headCellsProducts } from '../utils/headCells';
 import Form from '../components/Form';
 
+import { theme } from '../utils/theme'
+
+import './admin.css';
+
 const Admin = ({ authToken }) => {
   const [users, setUsers] = useState([]);
   const [products, setProducts] = useState([]);
@@ -34,7 +38,7 @@ const Admin = ({ authToken }) => {
 
   const handleNewItem = (obj) => {
     const route = !obj.email ? 'products' : 'users';
-
+    console.log('OBJ', obj)
     newItem(route, obj, authToken)
       .then(() => getItems(route, authToken))
       .then(resp => {
