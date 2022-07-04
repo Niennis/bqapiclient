@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Orders } from '../components/Orders.jsx';
-import { getItemById, getItems } from '../controller/api.js';
+import { getItemById, getItems, updateItem } from '../controller/api.js';
 
 const Kitchen = ({ authToken }) => {
   const [orders, setOrders] = useState([]);
