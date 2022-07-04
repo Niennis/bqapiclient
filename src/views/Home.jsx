@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Product } from '../components/Product';
 import { Order } from '../components/Order';
+import { getItems, sendOrder } from '../controller/api';
 
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
@@ -11,20 +12,9 @@ export const Home = ({ authToken }) => {
   const [listOfProducts, setListOfProducst] = useState([])
   const [client, setClient] = useState('');
 
-  const getProducts = (authToken) => {
-    return fetch('http://localhost:80/products', {
-      method: 'GET',
-      headers: {
-        "content-type": "application/json",
-        authorization: 'Bearer ' + authToken,
-      }
-    })
-      .then(response => response.json())
-  }
-
   useEffect(() => {
     let mounted = true;
-    getProducts(authToken)
+    getItems('products', authToken)
       .then(items => {
         if (mounted) {
           setDBData(items.products)
@@ -90,7 +80,7 @@ export const Home = ({ authToken }) => {
     return sum
   }
 
-  const sendOrder = () => {
+  const createOrder = () => {
     const user = localStorage.getItem('user')
     console.log('USER', JSON.parse(user));
     const date = new Date()
@@ -103,15 +93,7 @@ export const Home = ({ authToken }) => {
     newOrder.products = listOfProducts;
     console.log(newOrder)
 
-      return fetch('http://localhost:80/orders', {
-        method: 'POST',
-        body: JSON.stringify(newOrder),
-        headers: {
-          "content-type": "application/json",
-          authorization: 'Bearer ' + authToken,
-        }
-      })
-        .then(response => response.json())
+      return sendOrder('orders', newOrder, authToken)
         .then(resp => console.log(resp))
   }
 
@@ -154,7 +136,7 @@ export const Home = ({ authToken }) => {
             deleteItem={deleteItem}
             deleteAllItem={deleteAllItem}
             totalOrder={'$' + handleTotal()}
-            sendOrder={() => sendOrder()} />
+            sendOrder={() => createOrder()} />
         </>
       }
     </section>

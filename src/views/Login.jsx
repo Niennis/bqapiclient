@@ -12,7 +12,7 @@ export const Login = ({ getToken, navigateToHome }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    let url = 'https://bq-niennis.herokuapp.com/';
+    // let url = 'https://bq-niennis.herokuapp.com/';
     let user = {
       "email": email,
       "password": password
