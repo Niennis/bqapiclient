@@ -14,6 +14,8 @@ export const Product = ({ img, name, price, addItem }) => {
           <CardMedia
             component="img"
             height="140"
+            width="160"
+            objectfit="contain"
             image={img}
             alt={name}
           />

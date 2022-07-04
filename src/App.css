@@ -60,6 +60,13 @@ body{
   margin-top: 10px;
 }
 
+.allProducts img{
+  height: 140px;
+  width: 160px;
+  object-fit: contain;
+  background-color: white;
+}
+
 .allOrders{
   height: 70vh;
   display: flex;
@@ -80,10 +87,55 @@ a:active{
   color: white;
 }
 
+.home{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.orderContainer{
+  width: 30vw;
+  padding: 10px;
+  margin-top: 5vh;
+  border: 1px solid rgba(255, 255, 255, 0.311);
+}
+
 .orderItem{
   display: flex;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.311);
+  width: 30vw;
+  height: min-content;
 }
 
 .orderItem p{
   padding: 0 10px;
+  margin: 0;
+}
+
+main{
+  width: 95vw;
+  margin: auto;
+  margin-top: 20px;
+}
+
+.formContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: absolute;
+  top: 50px;
+  background-color: #212424e1;
+  width: 95vw;
+  height: 80vh;
+  margin: 0;
+}
+
+.alerts div{
+  display: inline;
+  margin: 5px;
+}
+
+.alerts{
+  justify-content: space-between;
+  padding: 10px 0;
 }
