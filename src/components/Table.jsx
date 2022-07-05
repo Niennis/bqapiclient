@@ -142,11 +142,11 @@ const EnhancedTable = ({ rows, typeForm, headCells, functions }) => {
   return (
     <ThemeProvider theme={theme}>
 
-    <Box sx={{ width: '100%', backgroundColor:'#40414c89' }}>
-      <Paper sx={{ width: '100%', mb: 2 }}>
+    <Box sx={{ width: '100%' }}>
+      <Paper sx={{ width: '100%', mb: 2 , backgroundColor:'#40414c89'}}>
         <Toolbar>
           <Typography
-            sx={{ flex: '1 1 100%', color:'white' }}
+            sx={{ flex: '1 1 100%', color:'white', fontWeight:'bold' }}
             variant="h6"
             id="tableTitle"
             component="div"
@@ -195,7 +195,7 @@ const EnhancedTable = ({ rows, typeForm, headCells, functions }) => {
                           }}
                         />
                       </TableCell>
-                      <TableCell  sx={{ color:'white'}}
+                      <TableCell  sx={{ color:'white' , fontWeight:'bold'}}
                         component="th"
                         id={labelId}
                         scope="row"
@@ -203,7 +203,7 @@ const EnhancedTable = ({ rows, typeForm, headCells, functions }) => {
                       >
                         {row[Object.values(headCells[0])[0]]}
                       </TableCell>
-                      <TableCell align="center"  sx={{ color:'white'}}>
+                      <TableCell align="center"  sx={{ color:'white', fontWeight:'bold'}}>
                         {Object.values(headCells[1])[0] === 'rol' ? (row.roles.admin && 'Admin') : row.price}
                       </TableCell>
                       <TableCell align="center">
@@ -246,7 +246,7 @@ const EnhancedTable = ({ rows, typeForm, headCells, functions }) => {
             </TableBody>
           </Table>
         </TableContainer>
-        <TablePagination  sx={{ color:'white'}}
+        <TablePagination  sx={{ color:'white', fontWeight:'bold'}}
           rowsPerPageOptions={[5, 10, 25]}
           component="div"
           count={rows.length}

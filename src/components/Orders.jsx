@@ -19,12 +19,12 @@ export const Orders = ({ order, qtyProducts, getOrder, handleUpdate }) => {
 
       <CardActionArea>
         <CardContent sx={{ padding: 0, margin: 0 }}>
-          <Typography gutterBottom component="div" sx={{ padding: 0, margin: 0, fontSize: 16 }}>
+          <Typography gutterBottom component="div" sx={{ padding: 0, margin: 0, fontSize: 16, fontWeight:'bold' }}>
             {order.client}
           </Typography>
           {order.products.map(prod => {
             return (
-              <Typography key={order.id + prod.product.id} variant="body2" color="text.secondary" sx={{ color: '#e1bee7' }}>
+              <Typography key={order.id + prod.product.id} variant="body2" color="text.secondary" sx={{ color: '#white', fontWeight:'bold' }}>
                 {prod.qty} {prod.product.name}
               </Typography>
             )

@@ -38,15 +38,6 @@ const Kitchen = ({ authToken }) => {
       dateProcessed: dateProcessed
     }
 
-    // const response = await fetch('http://localhost:80/orders/' + order.id, {
-    //   method: 'PUT',
-    //   body: JSON.stringify(updatedOrder),
-    //   headers: {
-    //     "content-type": "application/json",
-    //     authorization: 'Bearer ' + authToken,
-    //   }
-    // });
-
     const resp = updateItem('orders', order.id, updatedOrder, authToken)
     const pendingOrders = orders.map(item => {
       if (item.id === order.id) {
