@@ -1,12 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import EnhancedTable from '../components/Table';
-import AlertDialog from '../components/Alert';
+
 import { getItems, getItemById, updateItem, deleteItem, newItem } from '../controller/api';
-
 import { headCellsUsers, headCellsProducts } from '../utils/headCells';
-import Form from '../components/Form';
-
-import { theme } from '../utils/theme'
 
 import './admin.css';
 
@@ -27,18 +23,16 @@ const Admin = ({ authToken }) => {
       })
 
     getItems('users', authToken)
-  }, [])
+  }, [authToken])
 
 
   const getCurrentItem = (route, id) => {
-    console.log('getCurrentItem', id)
     getItemById(route, id, authToken)
       .then(resp => setCurrentItem(resp))
   }
 
   const handleNewItem = (obj) => {
     const route = !obj.email ? 'products' : 'users';
-    console.log('OBJ', obj)
     newItem(route, obj, authToken)
       .then(() => getItems(route, authToken))
       .then(resp => {
@@ -72,7 +66,6 @@ const Admin = ({ authToken }) => {
   }
 
   const handleDelete = (route, id) => {
-    console.log('handleDelete', id)
     deleteItem(route, id, authToken)
       .then(() => getItems(route, authToken))
       .then(resp => {

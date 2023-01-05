@@ -1,5 +1,4 @@
-// const API_URL = 'https://bq-niennis.herokuapp.com';
-const API_URL = process.env.REACT_APP_API_URL;
+const API_URL = "https://bakeryqueen.adaptable.app/";
 
 export const signIn = (route, user) => {
   return fetch(`${API_URL}/${route}`, {
@@ -9,11 +8,11 @@ export const signIn = (route, user) => {
       "content-type": "application/json"
     },
   })
-    .then(resp => resp.json())
+    .then(resp => {
+      return resp.json()})
 }
 
 export const getItems = (route, authToken) => {
-  // console.log(route, authToken)
   return fetch(`${API_URL}/${route}`, {
     method: 'GET',
     headers: {

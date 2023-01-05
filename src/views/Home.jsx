@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
+
 import { Product } from '../components/Product';
 import { Order } from '../components/Order';
 import { getItems, sendOrder } from '../controller/api';
 
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
-
 import { ThemeProvider } from '@mui/material/styles';
 import { theme } from '../utils/theme'
 import './home.css';
@@ -17,19 +17,15 @@ export const Home = ({ authToken }) => {
   const [client, setClient] = useState('');
 
   useEffect(() => {
-    let mounted = true;
     getItems('products', authToken)
       .then(items => {
-        if (mounted) {
           setDBData(items.products)
-        }
       })
-    return () => mounted = false;
-  }, [])
+  }, [authToken])
 
   const handleAddProduct = (item) => {
     let updateOrder = listOfProducts.map(el => {
-      if (el.product == item) {
+      if (el.product === item) {
         el.qty++
       }
       return el
@@ -52,7 +48,7 @@ export const Home = ({ authToken }) => {
 
   const deleteItem = (item) => {
     let updateOrder = listOfProducts.map(el => {
-      if (el.product == item && el.qty > 0) {
+      if (el.product === item && el.qty > 0) {
         el.qty--
       }
       return el
@@ -65,7 +61,7 @@ export const Home = ({ authToken }) => {
 
   const deleteAllItem = (item) => {
     let updateOrder = listOfProducts.map(el => {
-      if (el.product == item) {
+      if (el.product === item) {
         el.qty = 0
       }
       return el
@@ -76,26 +72,20 @@ export const Home = ({ authToken }) => {
     setListOfProducst(itemsOverZero)
   }
 
-  const newOrder = {}
-
+  
   const handleTotal = () => {
     let sum = 0;
     listOfProducts.forEach(el => sum += el.qty * el.product.price)
     return sum
   }
-
+  
   const createOrder = () => {
     const user = localStorage.getItem('user')
-    console.log('USER', JSON.parse(user));
-    const date = new Date()
-    const days = date.getDate() < 10 ? '0' + date.getDate() : date.getDate();
-    const month = date.getMonth() < 10 ? '0' + date.getMonth() : date.getMonth();
-    const dateEntry = date.getFullYear() + '-' + month + '-' + days + ' ' + date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds()
+    const newOrder = {}
 
     newOrder.userId = JSON.parse(user).id;
     newOrder.client = client;
     newOrder.products = listOfProducts;
-    console.log(newOrder)
 
     return sendOrder('orders', newOrder, authToken)
       .then(resp => console.log(resp))

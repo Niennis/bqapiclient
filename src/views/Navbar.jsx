@@ -1,9 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Link, Outlet } from "react-router-dom";
-import { Login } from "./Login"; 
 
-const Navbar = ({user}) => {
-  console.log(user)
+const Navbar = ({ user }) => {
   return (
     <>
       <header className="App-header">
@@ -13,9 +11,11 @@ const Navbar = ({user}) => {
             paddingBottom: "1rem",
           }}
         >
-          <Link to="home">Home</Link> 
-          <Link to="kitchen">{" | Kitchen"}</Link> 
-          <Link to="admin">{user && " | Admin"}</Link>
+          {user && <>
+            <Link to="home">Home</Link>
+            <Link to="kitchen">{" | Kitchen"}</Link>
+            <Link to="admin">{user && " | Admin"}</Link>
+          </>}
         </nav>
 
       </header>

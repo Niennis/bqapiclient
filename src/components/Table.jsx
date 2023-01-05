@@ -21,9 +21,6 @@ import AlertDialog from './Alert';
 import Form from './Form'
 
 import { ThemeProvider } from '@mui/material/styles';
-import Button from '@mui/material/Button';
-import { styled } from '@mui/material/styles';
-import { purple } from '@mui/material/colors';
 import { theme, ColorButton } from '../utils/theme';
 
 const descendingComparator = (a, b, orderBy) => {
@@ -132,7 +129,6 @@ const EnhancedTable = ({ rows, typeForm, headCells, functions }) => {
   };
 
   const handleModal = () => {
-    console.log(typeForm)
     setModal(!modal)
   }
 
@@ -207,12 +203,6 @@ const EnhancedTable = ({ rows, typeForm, headCells, functions }) => {
                         {Object.values(headCells[1])[0] === 'rol' ? (row.roles.admin && 'Admin') : row.price}
                       </TableCell>
                       <TableCell align="center">
-
-                        {/* <AlertDialog
-                          action={'Editar'}
-                          handleGet={() => functions.getCurrentItem(typeForm === 'Usuarios' ? 'users' : 'products', row.id)}
-                          handleUpdate={() => functions.handleEdit(typeForm === 'Usuarios' ? 'users' : 'products', row.id)} 
-                        /> */}
                         <ColorButton
                           sx={{ m: 1, textTransform: 'capitalize', margin: 0 }}
                           onClick={() => { 
@@ -265,7 +255,6 @@ const EnhancedTable = ({ rows, typeForm, headCells, functions }) => {
             handleNewItem={isNew ? functions.handleNewItem : functions.handleEdit}
           />
           : <></>
-
       }
     </Box>
     </ThemeProvider>

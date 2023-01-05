@@ -16,20 +16,17 @@ export const Login = ({ getToken, navigateToHome }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // let url = 'https://bq-niennis.herokuapp.com/';
     let user = {
       "email": email,
       "password": password
     };
-
     signIn('auth', user)
       .then(resp => {
         localStorage.setItem('user', JSON.stringify(resp))
-        console.log(resp)
         getToken(resp)
         navigateToHome()
       })
-      .catch(err => console.log(err))
+      .catch(err => console.log('ERROR', err))
   }
 
   return (

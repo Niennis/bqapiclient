@@ -14,7 +14,7 @@ const Kitchen = ({ authToken }) => {
         const pendingOrders = items.orders.filter(item => item.status === 'pending')
         setOrders(pendingOrders)
       })
-  }, [])
+  }, [authToken])
 
   const getOrder = (order) => {
     getItemById('orders', order.id, authToken)
