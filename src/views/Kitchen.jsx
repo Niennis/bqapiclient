@@ -6,8 +6,8 @@ import './kitchen.css';
 
 const Kitchen = ({ authToken }) => {
   const [orders, setOrders] = useState([]);
+  // eslint-disable-next-line
   const [order, setOrder] = useState('');
-
   useEffect(() => {
     getItems('orders', authToken)
       .then(items => {
