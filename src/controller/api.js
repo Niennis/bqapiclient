@@ -1,4 +1,4 @@
-const API_URL = "https://bakeryqueen.adaptable.app/";
+const API_URL = "https://bakery-queen.onrender.com";
 
 export const signIn = (route, user) => {
   return fetch(`${API_URL}/${route}`, {
