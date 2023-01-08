@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/bqapiclient/static/css/main.3cfebf14.css",
-    "main.js": "/bqapiclient/static/js/main.53f01677.js",
+    "main.js": "/bqapiclient/static/js/main.ec6b1145.js",
     "static/media/bgcake.png": "/bqapiclient/static/media/bgcake.ac4122a243493498d96b.png",
     "index.html": "/bqapiclient/index.html",
     "main.3cfebf14.css.map": "/bqapiclient/static/css/main.3cfebf14.css.map",
-    "main.53f01677.js.map": "/bqapiclient/static/js/main.53f01677.js.map"
+    "main.ec6b1145.js.map": "/bqapiclient/static/js/main.ec6b1145.js.map"
   },
   "entrypoints": [
     "static/css/main.3cfebf14.css",
-    "static/js/main.53f01677.js"
+    "static/js/main.ec6b1145.js"
   ]
 }
