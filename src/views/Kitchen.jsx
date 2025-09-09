@@ -51,8 +51,12 @@ const Kitchen = ({ authToken }) => {
 
   return (
     <div className='allOrders'>
-      {
-        orders.map((item) => {
+      {orders.length <= 0
+        ?
+        <div className='orderContainer'>
+          <h2 style={{color: 'black'}}>No hay órdenes pendientes</h2>
+        </div>
+        : orders.map((item) => {
           return (
             <Orders
               key={item.id + item.userId}
@@ -62,7 +66,9 @@ const Kitchen = ({ authToken }) => {
               handleUpdate={() => handleUpdate(item)} />
           )
         })
+
       }
+
     </div>
   )
 }
