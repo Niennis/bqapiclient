@@ -1,15 +1,19 @@
 const API_URL = "https://bakery-queen.onrender.com";
 
-export const signIn = (route, user) => {
-  return fetch(`${API_URL}/${route}`, {
-    method: 'POST',
-    body: JSON.stringify(user),
-    headers: {
-      "content-type": "application/json"
-    },
-  })
-    .then(resp => {
-      return resp.json()})
+export const signIn = async (route, user) => {
+  try {
+    const resp = await fetch(`${API_URL}/${route}`, {
+      method: 'POST',
+      body: JSON.stringify(user),
+      headers: {
+        "content-type": "application/json"
+      },
+    });
+    
+    return await resp.json();
+  } catch (err) {
+    return err;
+  }
 }
 
 export const getItems = (route, authToken) => {
