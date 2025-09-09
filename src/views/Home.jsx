@@ -6,6 +6,7 @@ import { getItems, sendOrder } from '../controller/api';
 
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
+import Backdrop from '../components/Backdrop';
 import { ThemeProvider } from '@mui/material/styles';
 import { theme } from '../utils/theme'
 import './home.css';
@@ -15,11 +16,12 @@ export const Home = ({ authToken }) => {
   const [orderProducts, setOrderProducts] = useState([])
   const [listOfProducts, setListOfProducst] = useState([])
   const [client, setClient] = useState('');
+  const [open, setOpen] = useState(false);
 
   useEffect(() => {
     getItems('products', authToken)
       .then(items => {
-          setDBData(items.products)
+        setDBData(items.products)
       })
   }, [authToken])
 
@@ -72,14 +74,15 @@ export const Home = ({ authToken }) => {
     setListOfProducst(itemsOverZero)
   }
 
-  
+
   const handleTotal = () => {
     let sum = 0;
     listOfProducts.forEach(el => sum += el.qty * el.product.price)
     return sum
   }
-  
-  const createOrder = () => {
+
+  const createOrder = async () => {
+    setOpen(true);
     const user = localStorage.getItem('user')
     const newOrder = {}
 
@@ -87,8 +90,17 @@ export const Home = ({ authToken }) => {
     newOrder.client = client;
     newOrder.products = listOfProducts;
 
-    return sendOrder('orders', newOrder, authToken)
-      .then(resp => console.log(resp))
+    try {
+      const resp = await sendOrder('orders', newOrder, authToken);
+      if (resp) {
+        setOpen(false);
+      }
+
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setOpen(false)
+    }
   }
 
   return (
@@ -97,7 +109,7 @@ export const Home = ({ authToken }) => {
         <Box
           component="form"
           sx={{
-            '& .MuiTextField-root': { m: 1, width: '25ch', backgroundColor: 'white' },
+            '& .MuiTextField-root': { m: 1, width: '25ch', backgroundColor: 'white' }
           }}
           noValidate
           autoComplete="off"
@@ -112,28 +124,83 @@ export const Home = ({ authToken }) => {
             name="client"
           />
         </Box>
-        <div className="allProducts" >
-          {dbData.map(element => {
-            return (
-              <div key={element.id}>
-                <Product img={element.image} name={element.name} price={element.price} addItem={() => { addItem(element) }} />
+        <div style={{ display: 'flex', justifyContent: 'space-around', alignItems: 'flex-start', width: '100%' }}>
+
+          <div
+            className="allProducts"
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              border: '1px solid white',
+              borderRadius: '10px',
+              padding: '10px',
+              width: '50%',
+            }}>
+
+            <div className="productsSection" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+              <h2>Pasteles</h2>
+              <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '10px' }}>
+                {dbData
+                  .filter(element => element.type === "breakfast")
+                  .map(element => (
+                    <div key={element.id}>
+                      <Product
+                        img={element.image}
+                        name={element.name}
+                        price={element.price}
+                        addItem={() => addItem(element)}
+                      />
+                    </div>
+                  ))}
               </div>
-            )
-          })}
+            </div>
+
+            <div className="productsSection" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+              <h2>Bebidas</h2>
+              <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '10px' }}>
+                {dbData
+                  .filter(element => element.type === "lunch")
+                  .map(element => (
+                    <div key={element.id}>
+                      <Product
+                        img={element.image}
+                        name={element.name}
+                        price={element.price}
+                        addItem={() => addItem(element)}
+                      />
+                    </div>
+                  ))}
+              </div>
+            </div>
+          </div>
+
+          <div
+            className="allProducts"
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              border: '1px solid white',
+              borderRadius: '10px',
+              padding: '10px',
+              width: '40%',
+            }}>
+            {orderProducts.length === 0
+              ? <h3 className='orderContainer'>Agregar productos</h3>
+              :
+              <Order
+                orderProducts={listOfProducts}
+                addItem={handleAddProduct}
+                deleteItem={deleteItem}
+                deleteAllItem={deleteAllItem}
+                totalOrder={'$' + handleTotal()}
+                sendOrder={() => createOrder()} />
+            }
+          </div>
         </div>
 
-        {orderProducts.length === 0
-          ? <h3 className='orderContainer'>Agregar productos</h3>
-          : <>
-            <Order
-              orderProducts={listOfProducts}
-              addItem={handleAddProduct}
-              deleteItem={deleteItem}
-              deleteAllItem={deleteAllItem}
-              totalOrder={'$' + handleTotal()}
-              sendOrder={() => createOrder()} />
-          </>
-        }
+        <Backdrop open={open} />
       </ThemeProvider>
     </section>
   )

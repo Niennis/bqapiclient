@@ -4,6 +4,7 @@ import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
+import Backdrop from '../components/Backdrop';
 
 import { ThemeProvider } from '@mui/material/styles';
 import { theme } from '../utils/theme'
@@ -13,21 +14,30 @@ export const Login = ({ getToken, navigateToHome }) => {
 
   const [email, setEmail] = useState('');
   const [password, setPass] = useState('');
+  const [open, setOpen] = useState(false);
 
   const handleSubmit = async (e) => {
+    setOpen(true);
     e.preventDefault();
     let user = {
       "email": email,
       "password": password
     };
-    signIn('auth', user)
-      .then(resp => {
-        localStorage.setItem('user', JSON.stringify(resp))
-        getToken(resp)
-        navigateToHome()
-      })
-      .catch(err => console.log('ERROR', err))
-  }
+    try {
+      const resp = await signIn("auth", user);
+
+      localStorage.setItem("user", JSON.stringify(resp));
+      getToken(resp);
+
+      // simulamos un pequeño delay para que se vea el loader
+      setTimeout(() => {
+        navigateToHome();
+      }, 1000);
+    } catch (err) {
+      console.log("ERROR", err);
+      setOpen(false); 
+    }
+  };
 
   return (
     <section className='loginSection'>
@@ -65,8 +75,12 @@ export const Login = ({ getToken, navigateToHome }) => {
           <Stack spacing={2} direction="row" alignItems={"center"} justifyContent={"center"}>
             <Button color="primary" variant="contained" sx={{ margin: '8px' }} onClick={handleSubmit}>Conectar</Button>
           </Stack>
+
+        
+          <Backdrop open={open} />
         </ThemeProvider>
       </Box>
+
     </section >
   )
 }

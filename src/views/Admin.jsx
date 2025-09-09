@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import EnhancedTable from '../components/Table';
+import Backdrop from '../components/Backdrop';
 
 import { getItems, getItemById, updateItem, deleteItem, newItem } from '../controller/api';
 import { headCellsUsers, headCellsProducts } from '../utils/headCells';
@@ -10,6 +11,7 @@ const Admin = ({ authToken }) => {
   const [users, setUsers] = useState([]);
   const [products, setProducts] = useState([]);
   const [currentItem, setCurrentItem] = useState('');
+  const [open, setOpen] = useState(false);
 
   useEffect(() => {
     getItems('users', authToken)
@@ -32,16 +34,18 @@ const Admin = ({ authToken }) => {
   }
 
   const handleNewItem = (obj) => {
+    setOpen(true);
     const route = !obj.email ? 'products' : 'users';
     newItem(route, obj, authToken)
       .then(() => getItems(route, authToken))
       .then(resp => {
         route === 'users' ? setUsers(resp.users) : setProducts(resp.products)
       })
+      .finally(() => setOpen(false));
   }
 
   const handleEdit = (obj) => {
-
+    setOpen(true);
     const bodyUser = {
       'email': obj.email || currentItem.email,
       'password': obj.password || 'changeme',
@@ -63,14 +67,17 @@ const Admin = ({ authToken }) => {
       .then(resp => {
         route === 'users' ? setUsers(resp.users) : setProducts(resp.products)
       })
+      .finally(() => setOpen(false));
   }
 
   const handleDelete = (route, id) => {
+    setOpen(true);
     deleteItem(route, id, authToken)
       .then(() => getItems(route, authToken))
       .then(resp => {
         route === 'users' ? setUsers(resp.users) : setProducts(resp.products)
       })
+      .finally(() => setOpen(false));
   }
 
   const functions = {
@@ -97,6 +104,7 @@ const Admin = ({ authToken }) => {
         headCells={headCellsProducts}
         handleNewItem={handleNewItem}
       />
+      <Backdrop open={open} />
 
     </main>
   )
