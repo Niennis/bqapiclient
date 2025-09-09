@@ -5,6 +5,8 @@ import TextField from '@mui/material/TextField';
 import AlertDialog from "./Alert";
 
 const Form = ({ typeForm, showModal, handleNewItem }) => {
+  const isDarkMode = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+  
   const roles = [
     {
       value: '',
@@ -93,7 +95,7 @@ const Form = ({ typeForm, showModal, handleNewItem }) => {
           <>
             <TextField
               required
-              style={{ width: "200px", margin: "5px" }}
+              style={{ width: "300px", margin: "5px", background: isDarkMode && 'white'  }}
               type="text"
               label="Email"
               variant="outlined"
@@ -103,7 +105,7 @@ const Form = ({ typeForm, showModal, handleNewItem }) => {
             <br />
             <TextField
               required
-              style={{ width: "200px", margin: "5px" }}
+              style={{ width: "300px", margin: "5px", background: isDarkMode && 'white' }}
               type="password"
               label="Contraseña"
               variant="outlined"
@@ -124,7 +126,7 @@ const Form = ({ typeForm, showModal, handleNewItem }) => {
                 native: true,
               }}
               variant="outlined"
-              sx={{ width: '200px', backgroundColor:'white' }}
+              sx={{ width: '300px', backgroundColor:'white', margin: '5px' }}
             >
               {roles.map((option) => (
                 <option key={option.value} value={option.value}>
@@ -138,7 +140,7 @@ const Form = ({ typeForm, showModal, handleNewItem }) => {
             <TextField
               required
               name="name"
-              style={{ width: "200px", margin: "5px" }}
+              style={{ width: "300px", margin: "5px", background: isDarkMode && 'white' }}
               type="text"
               label="Nombre"
               variant="filled"
@@ -148,7 +150,7 @@ const Form = ({ typeForm, showModal, handleNewItem }) => {
             <TextField
               required
               name="price"
-              style={{ width: "200px", margin: "5px" }}
+              style={{ width: "300px", margin: "5px", background: isDarkMode && 'white' }}
               type="number"
               label="Precio"
               variant="outlined"
@@ -158,7 +160,7 @@ const Form = ({ typeForm, showModal, handleNewItem }) => {
             <TextField
               required
               name="image"
-              style={{ width: "200px", margin: "5px" }}
+              style={{ width: "300px", margin: "5px", background: isDarkMode && 'white' }}
               type="text"
               label="URL imagen"
               variant="outlined"
@@ -177,7 +179,7 @@ const Form = ({ typeForm, showModal, handleNewItem }) => {
                 native: true,
               }}
               variant="outlined"
-              sx={{ width: '200px' }}
+              style={{ width: "300px", margin: "5px", background: isDarkMode && 'white' }}
             >
               {typeProduct.map((option) => (
                 <option key={option.value} value={option.value}>
