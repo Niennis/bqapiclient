@@ -200,7 +200,7 @@ const EnhancedTable = ({ rows, typeForm, headCells, functions }) => {
                         {row[Object.values(headCells[0])[0]]}
                       </TableCell>
                       <TableCell align="center"  sx={{ color:'white', fontWeight:'bold'}}>
-                        {Object.values(headCells[1])[0] === 'rol' ? (row.roles.admin && 'Admin') : row.price}
+                        {Object.values(headCells[1])[0] === 'rol' ? (row.roles.admin ? 'Admin' : 'Mesero') : row.price}
                       </TableCell>
                       <TableCell align="center">
                         <ColorButton

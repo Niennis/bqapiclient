@@ -15,7 +15,10 @@ export const Orders = ({ order, qtyProducts, getOrder, handleUpdate }) => {
       height: { qtyProducts } * 100,
       color: 'white',
       padding: '5px',
-      border: '1px solid #A1AAA1'
+      border: '1px solid #A1AAA1',
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'space-between'
     }}>
 
       <CardActionArea>
