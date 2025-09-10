@@ -9,34 +9,39 @@ export const signIn = async (route, user) => {
         "content-type": "application/json"
       },
     });
-    
+
     return await resp.json();
   } catch (err) {
     return err;
   }
 }
 
-export const getItems = (route, authToken) => {
-  return fetch(`${API_URL}/${route}`, {
+export const getItems = async (route, authToken) => {
+  const response = await fetch(`${API_URL}/${route}`, {
     method: 'GET',
     headers: {
-      "content-type": "application/json",
-      authorization: 'Bearer ' + authToken,
+      "Content-Type": "application/json",
+      "Authorization": "Bearer " + authToken,
     }
-  })
-    .then(response => response.json())
-}
+  });
 
-export const sendOrder = (route, body, authToken) => {
-  return fetch(`${API_URL}/${route}`, {
+  if (!response.ok) {
+    throw new Error(`Error ${response.status}: ${response.statusText}`);
+  }
+
+  return await response.json();
+};
+
+export const sendOrder = async (route, body, authToken) => {
+  const response = await fetch(`${API_URL}/${route}`, {
     method: 'POST',
     body: JSON.stringify(body),
     headers: {
       "content-type": "application/json",
       authorization: 'Bearer ' + authToken,
     }
-  })
-    .then(response => response.json())
+  });
+  return await response.json();
 }
 
 export const getItemById = (route, id, authToken) => {
@@ -50,7 +55,7 @@ export const getItemById = (route, id, authToken) => {
     .then(response => response.json())
 }
 
-export const newItem =  (route, body, authToken) => {
+export const newItem = (route, body, authToken) => {
   return fetch(`${API_URL}/${route}`, {
     method: 'POST',
     body: JSON.stringify(body),

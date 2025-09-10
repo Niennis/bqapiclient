@@ -11,33 +11,37 @@ import { theme } from '../utils/theme'
 import './login.css'
 
 export const Login = ({ getToken, navigateToHome }) => {
-
   const [email, setEmail] = useState('');
   const [password, setPass] = useState('');
   const [open, setOpen] = useState(false);
 
   const handleSubmit = async (e) => {
-    setOpen(true);
-    e.preventDefault();
-    let user = {
-      "email": email,
-      "password": password
-    };
-    try {
-      const resp = await signIn("auth", user);
+  setOpen(true);
+  e.preventDefault();
 
-      localStorage.setItem("user", JSON.stringify(resp));
-      getToken(resp);
-
-      // simulamos un pequeño delay para que se vea el loader
-      setTimeout(() => {
-        navigateToHome();
-      }, 1000);
-    } catch (err) {
-      console.log("ERROR", err);
-      setOpen(false); 
-    }
+  let user = {
+    "email": email,
+    "password": password
   };
+
+  try {
+    const resp = await signIn("auth", user);
+
+    // 👇 Guardamos SOLO el token en localStorage
+    localStorage.setItem("token", resp.token);
+
+    // 👇 Guardamos token en el estado del App
+    getToken(resp.token);
+
+    // simulamos un pequeño delay para que se vea el loader
+    setTimeout(() => {
+      navigateToHome();
+    }, 1000);
+  } catch (err) {
+    console.log("ERROR", err);
+    setOpen(false);
+  }
+};
 
   return (
     <section className='loginSection'>
@@ -76,7 +80,7 @@ export const Login = ({ getToken, navigateToHome }) => {
             <Button color="primary" variant="contained" sx={{ margin: '8px' }} onClick={handleSubmit}>Conectar</Button>
           </Stack>
 
-        
+
           <Backdrop open={open} />
         </ThemeProvider>
       </Box>
