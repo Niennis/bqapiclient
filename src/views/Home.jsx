@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 
 import { Product } from '../components/Product';
 import { Order } from '../components/Order';
@@ -123,6 +123,11 @@ export const Home = ({ authToken }) => {
             onChange={(e) => setClient(e.target.value)}
             name="client"
           />
+          {!client  && orderProducts.length > 0
+            && <span style={{ color: '#f60000', display: 'block', background: '#ffffff99', padding: '10px', borderRadius: '5px' }}>
+              * El nombre del cliente es obligatorio
+            </span>
+          }
         </Box>
         <div style={{ display: 'flex', justifyContent: 'space-around', alignItems: 'flex-start', width: '100%' }}>
 
