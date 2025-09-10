@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Orders } from '../components/Orders.jsx';
 import { getItemById, getItems, updateItem } from '../controller/api.js';
+import { jwtDecode } from "jwt-decode";
 
 import './kitchen.css';
 
@@ -8,11 +9,16 @@ const Kitchen = ({ authToken }) => {
   const [orders, setOrders] = useState([]);
   // eslint-disable-next-line
   const [order, setOrder] = useState('');
+
   useEffect(() => {
     getItems('orders', authToken)
       .then(items => {
         const pendingOrders = items.orders.filter(item => item.status === 'pending')
-        setOrders(pendingOrders)
+        const decoded = jwtDecode(authToken); // 
+        const filterOrders = pendingOrders.filter(item => {
+          return item.userId === decoded.uid
+        });
+        setOrders(filterOrders)
       })
   }, [authToken])
 
@@ -59,7 +65,7 @@ const Kitchen = ({ authToken }) => {
         :
 
         (
-          <div style={{ display: 'flex', gap: '10px'}}>   {/* 👈 contenedor que envuelve el map */}
+          <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap', justifyContent: 'center', }}>  
             {orders.map((item) => (
               <Orders
                 key={item.id + item.userId}

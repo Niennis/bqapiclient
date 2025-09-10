@@ -2,7 +2,9 @@ import { useState, useEffect } from 'react';
 
 import { Product } from '../components/Product';
 import { Order } from '../components/Order';
+import ConfirmDialog from '../components/Confirm';
 import { getItems, sendOrder } from '../controller/api';
+import { jwtDecode } from "jwt-decode";
 
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
@@ -17,6 +19,7 @@ export const Home = ({ authToken }) => {
   const [listOfProducts, setListOfProducst] = useState([])
   const [client, setClient] = useState('');
   const [open, setOpen] = useState(false);
+  const [showConfirm, setShowConfirm] = useState(false);
 
   useEffect(() => {
     getItems('products', authToken)
@@ -83,16 +86,20 @@ export const Home = ({ authToken }) => {
 
   const createOrder = async () => {
     setOpen(true);
-    const user = localStorage.getItem('user')
     const newOrder = {}
+    const decoded = jwtDecode(authToken); // 
 
-    newOrder.userId = JSON.parse(user).id;
+    newOrder.userId = decoded.uid;
     newOrder.client = client;
     newOrder.products = listOfProducts;
 
     try {
       const resp = await sendOrder('orders', newOrder, authToken);
+
       if (resp) {
+        setClient(''); // Limpia el campo nombre cliente
+        setListOfProducst([]); // Limpia la lista de productos agregados
+        setOrderProducts([]);
         setOpen(false);
       }
 
@@ -102,6 +109,15 @@ export const Home = ({ authToken }) => {
       setOpen(false)
     }
   }
+
+  const handleSendOrder = () => {
+    setShowConfirm(true);
+  };
+
+  const handleConfirm = () => {
+    setShowConfirm(false);
+    createOrder();
+  };
 
   return (
     <section className='home'>
@@ -122,8 +138,9 @@ export const Home = ({ authToken }) => {
             variant="filled"
             onChange={(e) => setClient(e.target.value)}
             name="client"
+            value={client}
           />
-          {!client  && orderProducts.length > 0
+          {!client && orderProducts.length > 0
             && <span style={{ color: '#f60000', display: 'block', background: '#ffffff99', padding: '10px', borderRadius: '5px' }}>
               * El nombre del cliente es obligatorio
             </span>
@@ -200,11 +217,16 @@ export const Home = ({ authToken }) => {
                 deleteItem={deleteItem}
                 deleteAllItem={deleteAllItem}
                 totalOrder={'$' + handleTotal()}
-                sendOrder={() => createOrder()} />
+  sendOrder={handleSendOrder} // <-- Cambia esto
+                />
             }
           </div>
         </div>
 
+        <ConfirmDialog
+          open={showConfirm}
+          onclick={handleConfirm}
+        />
         <Backdrop open={open} />
       </ThemeProvider>
     </section>
